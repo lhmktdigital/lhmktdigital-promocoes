@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LCH Ofertas</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f5;
+      color: #222;
+    }
+    header {
+      text-align: center;
+      background-color: #ffffff;
+      padding: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    header img {
+      max-width: 300px;
+      height: auto;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 1rem 0 0.5rem;
+      color: #1cbbb4;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      width: 300px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-body h3 {
+      font-size: 1.2rem;
+      margin: 0 0 0.5rem;
+      color: #1cbbb4;
+    }
+    .card-body p {
+      flex: 1;
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .button {
+      display: block;
+      text-align: center;
+      padding: 0.75rem;
+      margin-top: 1rem;
+      background: linear-gradient(to right, #1cbbb4, #00e6e0);
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+    .button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="banner.png" alt="LCH Marketing">
+    <h1>Ofertas em Destaque</h1>
+  </header>
+  <main class="container">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200?text=Produto+1" alt="Produto 1">
+      <div class="card-body">
+        <h3>Produto 1</h3>
+        <p>Descrição do produto afiliado número 1.</p>
+        <a href="https://linkdoafiliado.com/produto1" class="button" target="_blank">Ver Oferta</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200?text=Produto+2" alt="Produto 2">
+      <div class="card-body">
+        <h3>Produto 2</h3>
+        <p>Descrição do produto afiliado número 2.</p>
+        <a href="https://linkdoafiliado.com/produto2" class="button" target="_blank">Ver Oferta</a>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200?text=Produto+3" alt="Produto 3">
+      <div class="card-body">
+        <h3>Produto 3</h3>
+        <p>Descrição do produto afiliado número 3.</p>
+        <a href="https://linkdoafiliado.com/produto3" class="button" target="_blank">Ver Oferta</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
