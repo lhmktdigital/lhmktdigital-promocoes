@@ -97,32 +97,36 @@
   <main class="container"></main>
 
   <script>
-    async function carregarPromocoes() {
-      try {
-        const resposta = await fetch('promocoes.json');
-        const promocoes = await resposta.json();
-        const container = document.querySelector('.container');
-
-        promocoes.forEach(promo => {
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = \`
-            <img src="\${promo.imagem}" alt="\${promo.nome}">
-            <div class="card-body">
-              <h3>\${promo.nome}</h3>
-              <p>\${promo.descricao.replace(/\\n/g, "<br>")}</p>
-              <a href="\${promo.link}" class="button" target="_blank">Ver Oferta</a>
-            </div>
-          \`;
-          container.appendChild(card);
-        });
-      } catch (erro) {
-        console.error("Erro ao carregar promoções:", erro);
-        document.querySelector('.container').innerHTML = "<p>Não foi possível carregar as promoções.</p>";
+  async function carregarPromocoes() {
+    try {
+      const resposta = await fetch('promocoes.json');
+      if (!resposta.ok) {
+        document.querySelector('.container').innerHTML = "<p>Arquivo promocoes.json não encontrado (erro " + resposta.status + ")</p>";
+        return;
       }
-    }
+      const promocoes = await resposta.json();
+      const container = document.querySelector('.container');
 
-    carregarPromocoes();
-  </script>
+      promocoes.forEach(promo => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = \`
+          <img src="\${promo.imagem}" alt="\${promo.nome}">
+          <div class="card-body">
+            <h3>\${promo.nome}</h3>
+            <p>\${promo.descricao.replace(/\\n/g, "<br>")}</p>
+            <a href="\${promo.link}" class="button" target="_blank">Ver Oferta</a>
+          </div>
+        \`;
+        container.appendChild(card);
+      });
+    } catch (erro) {
+      document.querySelector('.container').innerHTML = "<p>Erro ao carregar promoções.</p>";
+      console.error("Erro:", erro);
+    }
+  }
+
+  carregarPromocoes();
+</script>
 </body>
 </html>
