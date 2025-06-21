@@ -21,7 +21,7 @@
     header img {
       width: 100%;
       height: auto;
-      max-height: 220px;
+      max-height: 150px; /* Reduzi a altura máxima do banner */
       object-fit: contain;
       display: block;
     }
@@ -36,13 +36,13 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 1rem; /* Menor espaçamento entre cards */
       padding: 2rem 1rem;
     }
     .card {
       background: white;
       border-radius: 12px;
-      width: 300px;
+      width: 260px; /* Reduzi a largura */
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       overflow: hidden;
       display: flex;
@@ -54,26 +54,29 @@
     }
     .card img {
       width: 100%;
-      height: 200px;
+      height: 150px; /* Reduzi a altura da imagem */
       object-fit: cover;
     }
     .card-body {
-      padding: 1rem;
+      padding: 0.75rem; /* Padding menor */
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
     .card-body h3 {
-      font-size: 1.2rem;
+      font-size: 1rem; /* Fonte menor */
       margin: 0 0 0.5rem;
       color: #1cbbb4;
     }
     .card-body p {
       flex: 1;
-      font-size: 0.95rem;
+      font-size: 0.85rem; /* Fonte menor */
       color: #555;
       white-space: pre-line;
+      max-height: 4.5em; /* Limita altura da descrição */
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .button {
       display: block;
@@ -110,7 +113,6 @@
   <script>
     async function carregarPromocoes() {
       try {
-        // Adiciona timestamp para evitar cache do JSON
         const resposta = await fetch('promocoes.json?v=' + Date.now());
         if (!resposta.ok) {
           document.querySelector('.container').innerHTML = "<p>Arquivo promocoes.json não encontrado (erro " + resposta.status + ")</p>";
