@@ -21,8 +21,8 @@
     header img {
       width: 100%;
       height: auto;
-      max-height: 120px;
-      object-fit: contain;
+      max-height: 220px; /* aumentei para banner maior */
+      object-fit: contain; /* mantém proporção sem cortar */
       display: block;
     }
     h1 {
@@ -73,7 +73,7 @@
       flex: 1;
       font-size: 0.95rem;
       color: #555;
-      white-space: pre-line; /* para respeitar quebras de linha */
+      white-space: pre-line; /* respeitar quebras de linha */
     }
     .button {
       display: block;
@@ -90,9 +90,10 @@
       opacity: 0.9;
     }
 
+    /* Responsividade */
     @media (max-width: 480px) {
       header img {
-        max-height: 90px;
+        max-height: 140px; /* banner menor em celular */
       }
       .card {
         width: 90%;
@@ -109,7 +110,7 @@
 
     <!-- Promoção fixa no HTML -->
     <div class="card">
-      <img src="https://via.placeholder.com/300x200?text=Cozinha+Itatiaia" alt="Cozinha Itatiaia Amanda">
+      <img src="https://a-static.mlcdn.com.br/800x560/cozinha-compacta-itatiaia-amanda-aco-com-balcao-10-portas-1-gaveta/magazineluiza/237989600/b0cab9ca83e958927e6678ebbfe49baa.jpg" alt="Cozinha Itatiaia Amanda">
       <div class="card-body">
         <h3>Cozinha Itatiaia Amanda</h3>
         <p>🔥 De: R$ 1.199,00
