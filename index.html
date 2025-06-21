@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -90,31 +89,30 @@
     <img src="banner.png" alt="LCH Marketing">
     <h1>Ofertas em Destaque</h1>
   </header>
-  <main class="container">
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200?text=Produto+1" alt="Produto 1">
-      <div class="card-body">
-        <h3>Produto 1</h3>
-        <p>Descrição do produto afiliado número 1.</p>
-        <a href="https://linkdoafiliado.com/produto1" class="button" target="_blank">Ver Oferta</a>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200?text=Produto+2" alt="Produto 2">
-      <div class="card-body">
-        <h3>Produto 2</h3>
-        <p>Descrição do produto afiliado número 2.</p>
-        <a href="https://linkdoafiliado.com/produto2" class="button" target="_blank">Ver Oferta</a>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://via.placeholder.com/300x200?text=Produto+3" alt="Produto 3">
-      <div class="card-body">
-        <h3>Produto 3</h3>
-        <p>Descrição do produto afiliado número 3.</p>
-        <a href="https://linkdoafiliado.com/produto3" class="button" target="_blank">Ver Oferta</a>
-      </div>
-    </div>
-  </main>
+  <main class="container"></main>
+
+  <script>
+    async function carregarPromocoes() {
+      const resposta = await fetch('promocoes.json');
+      const promocoes = await resposta.json();
+      const container = document.querySelector('.container');
+
+      promocoes.forEach(promo => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = \`
+          <img src="\${promo.imagem}" alt="\${promo.nome}">
+          <div class="card-body">
+            <h3>\${promo.nome}</h3>
+            <p>\${promo.descricao.replace(/\n/g, "<br>")}</p>
+            <a href="\${promo.link}" class="button" target="_blank">Ver Oferta</a>
+          </div>
+        \`;
+        container.appendChild(card);
+      });
+    }
+
+    carregarPromocoes();
+  </script>
 </body>
 </html>
