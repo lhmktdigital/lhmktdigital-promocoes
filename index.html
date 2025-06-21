@@ -21,8 +21,8 @@
     header img {
       width: 100%;
       height: auto;
-      max-height: 220px; /* aumentei para banner maior */
-      object-fit: contain; /* mantém proporção sem cortar */
+      max-height: 220px;
+      object-fit: contain;
       display: block;
     }
     h1 {
@@ -73,7 +73,7 @@
       flex: 1;
       font-size: 0.95rem;
       color: #555;
-      white-space: pre-line; /* respeitar quebras de linha */
+      white-space: pre-line;
     }
     .button {
       display: block;
@@ -90,10 +90,9 @@
       opacity: 0.9;
     }
 
-    /* Responsividade */
     @media (max-width: 480px) {
       header img {
-        max-height: 140px; /* banner menor em celular */
+        max-height: 140px;
       }
       .card {
         width: 90%;
@@ -106,21 +105,43 @@
     <img src="banner.png" alt="LCH Marketing">
     <h1>OFERTAS EM DESTAQUE</h1>
   </header>
-  <main class="container">
+  <main class="container"></main>
 
-    <!-- Promoção fixa no HTML -->
-    <div class="card">
-      <img src="https://a-static.mlcdn.com.br/800x560/cozinha-compacta-itatiaia-amanda-aco-com-balcao-10-portas-1-gaveta/magazineluiza/237989600/b0cab9ca83e958927e6678ebbfe49baa.jpg" alt="Cozinha Itatiaia Amanda">
-      <div class="card-body">
-        <h3>Cozinha Itatiaia Amanda</h3>
-        <p>🔥 De: R$ 1.199,00
-💸 Por: R$ 876,60 via Pix
-💳 Ou 8x de R$ 109,58 no crédito
-🚚 Frete grátis (consulte sua região)</p>
-        <a href="https://www.magazinevoce.com.br/magazinelhmktdigital/cozinha-compacta-itatiaia-amanda-aco-com-balcao-10-portas-1-gaveta/p/237989600/mo/mocz/" class="button" target="_blank">Ver Oferta</a>
-      </div>
-    </div>
+  <script>
+    async function carregarPromocoes() {
+      try {
+        const resposta = await fetch('promocoes.json');
+        if (!resposta.ok) {
+          document.querySelector('.container').innerHTML = "<p>Arquivo promocoes.json não encontrado (erro " + resposta.status + ")</p>";
+          return;
+        }
+        const promocoes = await resposta.json();
+        if (!Array.isArray(promocoes)) {
+          document.querySelector('.container').innerHTML = "<p>Arquivo JSON inválido: não é uma lista.</p>";
+          return;
+        }
+        const container = document.querySelector('.container');
+        container.innerHTML = '';
 
-  </main>
+        promocoes.forEach(promo => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="\${promo.imagem}" alt="\${promo.nome}">
+            <div class="card-body">
+              <h3>\${promo.nome}</h3>
+              <p>\${promo.descricao.replace(/\n/g, "<br>")}</p>
+              <a href="\${promo.link}" class="button" target="_blank">Ver Oferta</a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      } catch (erro) {
+        document.querySelector('.container').innerHTML = "<p>Erro ao carregar promoções.</p>";
+        console.error("Erro:", erro);
+      }
+    }
+    carregarPromocoes();
+  </script>
 </body>
 </html>
