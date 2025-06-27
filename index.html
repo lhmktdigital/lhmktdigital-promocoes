@@ -55,24 +55,30 @@
 
     /* Header */
     header {
-      width: 100%;
-      background: linear-gradient(to bottom, #ffffff 0%, #e6f9f8 100%);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      text-align: center;
-      padding-bottom: 0.5rem;
       position: sticky;
       top: 0;
       z-index: 1000;
+      text-align: center;
+      background: linear-gradient(to bottom, #ffffff 0%, #e6f9f8 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding-top: 0.5rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      flex-wrap: wrap;
     }
 
     header img {
       width: 100%;
       max-height: 280px;
       object-fit: contain;
-      display: block;
-      margin: 0 auto;
       user-select: none;
       pointer-events: none;
+      order: 2;
     }
 
     header h1 {
@@ -81,12 +87,50 @@
       color: #1cbbb4;
       font-weight: 600;
       user-select: none;
+      order: 3;
+      flex-basis: 100%;
+      text-align: center;
+    }
+
+    /* Botão modo escuro */
+    #darkModeToggle {
+      order: 1;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #1cbbb4;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 1rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      transition: color 0.3s ease, background-color 0.3s ease;
+    }
+
+    #darkModeToggle svg {
+      stroke: currentColor;
+      width: 24px;
+      height: 24px;
+    }
+
+    #darkModeToggle:hover,
+    #darkModeToggle:focus {
+      background-color: #d2f5f4;
+      outline: none;
+      color: #00e6e0;
+    }
+
+    body.dark header img {
+      filter: brightness(0.6);
     }
 
     /* Search */
     #search-container {
       text-align: center;
       margin: 1rem 0;
+      flex-basis: 100%;
     }
 
     #searchInput {
@@ -242,36 +286,10 @@
       border-color: #333;
     }
 
-    /* Botão modo escuro */
-    #darkModeToggle {
-      position: fixed;
-      bottom: 100px;
-      right: 20px;
-      background: #1cbbb4;
-      border: none;
-      border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(28,187,180,0.6);
-      color: white;
-      font-size: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.3s ease;
-      z-index: 1100;
-    }
-    #darkModeToggle:hover,
-    #darkModeToggle:focus {
-      background-color: #00e6e0;
-      outline: none;
-    }
-
     /* Botão voltar ao topo */
     #backToTop {
       position: fixed;
-      bottom: 160px;
+      bottom: 60px;
       right: 20px;
       background: #1cbbb4;
       border: none;
@@ -341,6 +359,20 @@
 <body>
 
   <header>
+    <button id="darkModeToggle" aria-label="Alternar modo escuro" title="Alternar modo escuro" type="button" >
+      <svg id="icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+        <circle cx="12" cy="12" r="5"></circle>
+        <path d="M12 1v2"></path>
+        <path d="M12 21v2"></path>
+        <path d="M4.22 4.22l1.42 1.42"></path>
+        <path d="M18.36 18.36l1.42 1.42"></path>
+        <path d="M1 12h2"></path>
+        <path d="M21 12h2"></path>
+        <path d="M4.22 19.78l1.42-1.42"></path>
+        <path d="M18.36 5.64l1.42-1.42"></path>
+      </svg>
+      <span id="darkModeText">Modo escuro</span>
+    </button>
     <img src="banner.png" alt="LCH Marketing" draggable="false" />
     <h1>OFERTAS EM DESTAQUE</h1>
   </header>
@@ -355,7 +387,6 @@
   </main>
 
   <button id="loadMoreBtn" style="display:none;">Carregar mais</button>
-  <button id="darkModeToggle" aria-label="Alternar modo escuro" title="Modo escuro">🌙</button>
   <button id="backToTop" aria-label="Voltar ao topo" title="Voltar ao topo">⬆️</button>
 
   <footer>
@@ -369,6 +400,7 @@
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     const searchInput = document.getElementById('searchInput');
     const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeText = document.getElementById('darkModeText');
     const backToTopBtn = document.getElementById('backToTop');
 
     let promocoes = [];
@@ -466,31 +498,53 @@
     function aplicarModoEscuro(ativo) {
       if (ativo) {
         document.body.classList.add('dark');
-        darkModeToggle.textContent = '☀️';
+        darkModeText.textContent = 'Modo claro';
+        // Muda ícone para sol simples
+        darkModeToggle.querySelector('svg').innerHTML = `
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        `;
       } else {
         document.body.classList.remove('dark');
-        darkModeToggle.textContent = '🌙';
+        darkModeText.textContent = 'Modo escuro';
+        // Ícone da lua original
+        darkModeToggle.querySelector('svg').innerHTML = `
+          <circle cx="12" cy="12" r="5"></circle>
+          <path d="M12 1v2"></path>
+          <path d="M12 21v2"></path>
+          <path d="M4.22 4.22l1.42 1.42"></path>
+          <path d="M18.36 18.36l1.42 1.42"></path>
+          <path d="M1 12h2"></path>
+          <path d="M21 12h2"></path>
+          <path d="M4.22 19.78l1.42-1.42"></path>
+          <path d="M18.36 5.64l1.42-1.42"></path>
+        `;
       }
-      localStorage.setItem('modoEscuro', ativo);
     }
 
     darkModeToggle.addEventListener('click', () => {
-      const modoAtivo = document.body.classList.contains('dark');
-      aplicarModoEscuro(!modoAtivo);
+      const ativo = document.body.classList.contains('dark');
+      aplicarModoEscuro(!ativo);
+      localStorage.setItem('modoEscuro', !ativo);
     });
 
-    // Carrega preferencia ao iniciar
+    // Carregar preferência modo escuro do localStorage
     window.addEventListener('load', () => {
-      const modoSalvo = localStorage.getItem('modoEscuro') === 'true';
-      aplicarModoEscuro(modoSalvo);
+      const preferencia = localStorage.getItem('modoEscuro');
+      if (preferencia === 'true') {
+        aplicarModoEscuro(true);
+      }
+      carregarPromocoes();
     });
 
     // Botão voltar ao topo
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    // Mostrar botão voltar ao topo só se rolou para baixo
     window.addEventListener('scroll', () => {
       if (window.scrollY > 300) {
         backToTopBtn.style.display = 'flex';
@@ -499,8 +553,10 @@
       }
     });
 
-    // Carregar promoções na inicialização
-    carregarPromocoes();
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      searchInput.focus();
+    });
   </script>
 
 </body>
