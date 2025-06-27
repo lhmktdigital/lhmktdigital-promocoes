@@ -23,8 +23,8 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       text-align: center;
       transition: background-color 0.3s;
-      padding-top: 0.25rem;  /* menos espaço acima */
-      padding-bottom: 0.25rem; /* menos espaço abaixo */
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
     }
     body.dark header {
       background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100%);
@@ -36,9 +36,15 @@
       padding: 0 16px;
       display: flex;
       justify-content: center;
+      background: linear-gradient(to bottom, #ffffff 0%, #e6f9f8 100%);
+      transition: background 0.3s;
     }
+    body.dark .banner-container {
+      background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100%);
+    }
+
     .banner-container img {
-      max-height: 140px;  /* altura menor para o banner */
+      max-height: 140px;
       width: 100%;
       max-width: 700px;
       height: auto;
@@ -47,15 +53,16 @@
       box-shadow: none;
       display: block;
       margin: 0 auto;
+      background: transparent; /* importante: garantir fundo transparente */
     }
     body.dark .banner-container img {
       filter: brightness(0.75);
     }
 
     header h1 {
-      margin-top: 0.25rem;  /* espaço menor entre banner e título */
+      margin-top: 0.25rem;
       margin-bottom: 0.5rem;
-      font-size: 1rem;      /* fonte menor para o título */
+      font-size: 1rem;
       font-weight: 600;
       color: #1cbbb4;
       transition: color 0.3s;
