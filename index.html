@@ -4,12 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LH Ofertas</title>
+  <link rel="icon" href="logo.png" type="image/png">
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f0f4f5;
       color: #222;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark {
+      background-color: #1f1f1f;
+      color: #ddd;
     }
     header {
       width: 100%;
@@ -30,15 +36,40 @@
       color: #1cbbb4;
       font-weight: 600;
     }
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0.5rem 1rem;
+    }
+    .dark-mode-toggle {
+      cursor: pointer;
+      font-size: 0.9rem;
+      background: none;
+      border: none;
+      color: #1cbbb4;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
     .toolbar {
       display: flex;
+      align-items: center;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 0.5rem;
       padding: 0.8rem 1rem;
       background: #fff;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
       border-bottom: 1px solid #ddd;
+    }
+    .toolbar.dark {
+      background: #2a2a2a;
+      border-color: #444;
+    }
+    .toolbar img {
+      height: 32px;
+      width: 32px;
+      margin-right: 0.8rem;
     }
     .toolbar input, .toolbar select, .toolbar button {
       padding: 0.5rem;
@@ -50,6 +81,7 @@
       background: #1cbbb4;
       color: white;
       cursor: pointer;
+      border: none;
     }
     .container {
       display: flex;
@@ -100,6 +132,9 @@
       white-space: pre-line;
       flex-grow: 1;
     }
+    body.dark .card-body p {
+      color: #ccc;
+    }
     .button {
       display: block;
       text-align: center;
@@ -119,15 +154,37 @@
       padding: 1rem;
       color: #888;
     }
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1cbbb4;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 18px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <button class="dark-mode-toggle" id="darkModeToggle">🌙 <span id="darkModeText">Modo escuro</span></button>
+  </div>
+
   <header>
     <img src="banner.png" alt="LCH Marketing">
     <h1>OFERTAS EM DESTAQUE</h1>
   </header>
 
-  <div class="toolbar">
+  <div class="toolbar" id="toolbar">
+    <img src="logo.png" alt="Logo LH">
     <input type="text" id="search" placeholder="Buscar...">
     <select id="categoryFilter">
       <option value="">Todas as categorias</option>
@@ -142,6 +199,8 @@
 
   <main class="container"></main>
 
+  <button id="backToTop" title="Voltar ao topo">↑</button>
+
   <footer>
     &copy; 2025 LH Ofertas - Todos os direitos reservados
   </footer>
@@ -152,6 +211,10 @@
     const categoryFilter = document.getElementById('categoryFilter');
     const sortOrder = document.getElementById('sortOrder');
     const clearFilters = document.getElementById('clearFilters');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeText = document.getElementById('darkModeText');
+    const backToTop = document.getElementById('backToTop');
+    const toolbar = document.getElementById('toolbar');
     let promocoes = [];
 
     function criarCard(promo) {
@@ -207,11 +270,31 @@
 
     [search, categoryFilter, sortOrder].forEach(el => el.addEventListener('input', atualizarExibicao));
 
+    darkModeToggle.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      darkModeText.textContent = isDark ? 'Modo claro' : 'Modo escuro';
+      localStorage.setItem('modoEscuro', isDark ? 'true' : 'false');
+      toolbar.classList.toggle('dark', isDark);
+    });
+
+    window.addEventListener('scroll', () => {
+      backToTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
     fetch('promocoes.json?v=' + Date.now())
       .then(r => r.json())
       .then(data => {
         promocoes = data;
         popularCategorias();
+        const modoSalvo = localStorage.getItem('modoEscuro');
+        const isDark = modoSalvo === 'true';
+        document.body.classList.toggle('dark', isDark);
+        darkModeText.textContent = isDark ? 'Modo claro' : 'Modo escuro';
+        toolbar.classList.toggle('dark', isDark);
         atualizarExibicao();
       })
       .catch(() => {
