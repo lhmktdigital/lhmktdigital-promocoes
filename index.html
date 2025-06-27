@@ -23,44 +23,41 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       text-align: center;
       transition: background-color 0.3s;
-      padding-bottom: 0.5rem;
+      padding-top: 0.25rem;  /* menos espaço acima */
+      padding-bottom: 0.25rem; /* menos espaço abaixo */
     }
     body.dark header {
       background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100%);
     }
 
-    /* NOVO: container para o banner */
     .banner-container {
       max-width: 1140px;
       margin: 0 auto;
       padding: 0 16px;
+      display: flex;
+      justify-content: center;
     }
     .banner-container img {
+      max-height: 140px;  /* altura menor para o banner */
       width: 100%;
+      max-width: 700px;
       height: auto;
-      border-radius: 0;       /* sem borda arredondada no desktop */
-      box-shadow: none;       /* sem sombra no desktop */
       object-fit: contain;
+      border-radius: 0;
+      box-shadow: none;
       display: block;
       margin: 0 auto;
     }
-    /* no modo dark */
     body.dark .banner-container img {
       filter: brightness(0.75);
     }
-    /* Mobile: bordas arredondadas e sombra suave */
-    @media (max-width: 768px) {
-      .banner-container img {
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      }
-    }
 
     header h1 {
-      font-size: 1.2rem;
-      margin: 0.5rem 0 1rem;
-      color: #1cbbb4;
+      margin-top: 0.25rem;  /* espaço menor entre banner e título */
+      margin-bottom: 0.5rem;
+      font-size: 1rem;      /* fonte menor para o título */
       font-weight: 600;
+      color: #1cbbb4;
       transition: color 0.3s;
     }
     body.dark header h1 {
