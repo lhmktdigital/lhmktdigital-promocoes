@@ -4,17 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LH Ofertas</title>
-
-  <!-- Meta SEO -->
-  <meta name="description" content="Ofertas em destaque da LH Marketing - promoções imperdíveis para você!" />
-  <meta property="og:title" content="LH Ofertas - Promoções Imperdíveis" />
-  <meta property="og:description" content="Confira as melhores ofertas selecionadas para você." />
-  <meta property="og:image" content="banner.png" />
-  <meta property="og:type" content="website" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
@@ -26,130 +15,137 @@
       color: #222;
       transition: background-color 0.3s ease, color 0.3s ease;
       min-height: 100vh;
-      position: relative;
-      padding-bottom: 100px; /* espaço para footer */
+      padding-bottom: 100px;
     }
-
-    /* Dark mode */
     body.dark {
       background-color: #121212;
       color: #ddd;
     }
-    body.dark header {
-      background: linear-gradient(to bottom, #1a1a1a 0%, #0d0d0d 100%);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    body.dark .card {
-      background: #222;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.8);
-    }
-    body.dark .card-body h3 {
-      color: #00e6e0;
-    }
-    body.dark .card-body p {
-      color: #bbb;
-    }
-    body.dark .button {
-      box-shadow: 0 2px 6px rgba(0,230,224,0.6);
-    }
-
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      text-align: center;
-      background: linear-gradient(to bottom, #ffffff 0%, #e6f9f8 100%);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      padding-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding-top: 0.5rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      flex-wrap: wrap;
-    }
-
-    header img {
-      width: 100%;
-      max-height: 280px;
-      object-fit: contain;
-      user-select: none;
-      pointer-events: none;
-      order: 2;
-    }
-
-    header h1 {
-      font-size: 1.4rem;
-      margin: 0.8rem 0 1.2rem;
-      color: #1cbbb4;
-      font-weight: 600;
-      user-select: none;
-      order: 3;
-      flex-basis: 100%;
-      text-align: center;
-    }
-
-    /* Botão modo escuro */
-    #darkModeToggle {
-      order: 1;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: #1cbbb4;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 1rem;
-      padding: 0.3rem 0.6rem;
-      border-radius: 8px;
-      transition: color 0.3s ease, background-color 0.3s ease;
-    }
-
-    #darkModeToggle svg {
-      stroke: currentColor;
-      width: 24px;
-      height: 24px;
-    }
-
-    #darkModeToggle:hover,
-    #darkModeToggle:focus {
-      background-color: #d2f5f4;
-      outline: none;
-      color: #00e6e0;
-    }
-
     body.dark header img {
       filter: brightness(0.6);
     }
 
-    /* Search */
-    #search-container {
-      text-align: center;
-      margin: 1rem 0;
-      flex-basis: 100%;
+    /* Barra de ferramentas */
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 1100;
+      background: linear-gradient(to bottom, #ffffff 0%, #e6f9f8 100%);
+      border-bottom: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 1rem;
     }
 
+    .toolbar > * {
+      flex-shrink: 0;
+    }
+
+    /* Logo simples */
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #1cbbb4;
+      user-select: none;
+    }
+
+    /* Busca */
     #searchInput {
       padding: 0.5rem 0.8rem;
       font-size: 1rem;
-      width: 90%;
-      max-width: 400px;
+      width: 200px;
       border-radius: 6px;
       border: 1px solid #ccc;
       outline-offset: 2px;
       outline-color: #1cbbb4;
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
       background: white;
       color: black;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
     body.dark #searchInput {
       background: #333;
       color: #ddd;
       border-color: #00e6e0;
+    }
+
+    /* Dropdowns */
+    select {
+      padding: 0.5rem 0.8rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: white;
+      color: black;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    body.dark select {
+      background: #333;
+      color: #ddd;
+      border-color: #00e6e0;
+    }
+
+    /* Botões */
+    button {
+      cursor: pointer;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      border: none;
+      color: white;
+      background: #1cbbb4;
+      box-shadow: 0 2px 8px rgba(28,187,180,0.7);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    button:hover, button:focus {
+      background-color: #00e6e0;
+      box-shadow: 0 4px 12px rgba(28,187,180,0.9);
+      outline: none;
+    }
+
+    /* Botão modo escuro */
+    #darkModeToggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: #1cbbb4;
+      padding: 0.3rem 0.6rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    }
+    #darkModeToggle:hover, #darkModeToggle:focus {
+      background-color: #d2f5f4;
+      border-color: #00e6e0;
+      outline: none;
+      color: #00e6e0;
+    }
+    #darkModeToggle svg {
+      stroke: currentColor;
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Banner */
+    header {
+      width: 100%;
+      max-height: 280px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      user-select: none;
+      pointer-events: none;
+    }
+    header img {
+      width: 100%;
+      height: 280px;
+      object-fit: contain;
+      filter: brightness(1);
+      transition: filter 0.3s ease;
     }
 
     /* Container e cards */
@@ -158,10 +154,9 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 0.8rem;
-      padding: 1.2rem 1rem;
+      padding: 0 1rem 1rem;
       min-height: 200px;
     }
-
     .card {
       background: white;
       border-radius: 12px;
@@ -173,12 +168,14 @@
       flex-direction: column;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-
+    body.dark .card {
+      background: #222;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    }
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 6px 12px rgba(0,0,0,0.12);
     }
-
     .card img {
       width: 100%;
       height: 100px;
@@ -188,7 +185,6 @@
       user-select: none;
       pointer-events: none;
     }
-
     .card-body {
       padding: 0.5rem;
       display: flex;
@@ -196,7 +192,6 @@
       justify-content: flex-start;
       height: 100%;
     }
-
     .card-body h3 {
       font-size: 0.95rem;
       margin: 0 0 0.3rem;
@@ -204,7 +199,9 @@
       font-weight: 600;
       user-select: text;
     }
-
+    body.dark .card-body h3 {
+      color: #00e6e0;
+    }
     .card-body p {
       font-size: 0.78rem;
       color: #444;
@@ -213,8 +210,9 @@
       flex-grow: 1;
       user-select: text;
     }
-
-    /* Botão das ofertas */
+    body.dark .card-body p {
+      color: #bbb;
+    }
     .button {
       display: block;
       text-align: center;
@@ -232,7 +230,6 @@
       box-shadow: 0 2px 6px rgba(28,187,180,0.3);
       transition: background-position 0.3s ease, box-shadow 0.2s ease, transform 0.2s ease;
     }
-
     .button:hover,
     .button:focus {
       background-position: right;
@@ -241,49 +238,17 @@
       outline: none;
     }
 
-    /* Loading message */
-    #loading-msg {
+    /* Mensagens */
+    #loading-msg, #no-results {
       text-align: center;
       margin-top: 2rem;
       color: #666;
       font-style: italic;
       user-select: none;
     }
-    body.dark #loading-msg {
-      color: #aaa;
-    }
-
-    /* Mensagem "nenhuma oferta" */
-    #no-results {
-      text-align: center;
-      margin-top: 2rem;
-      color: #666;
-      font-style: italic;
-      display: none;
-      user-select: none;
-    }
+    body.dark #loading-msg,
     body.dark #no-results {
       color: #aaa;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.8rem;
-      color: #888;
-      border-top: 1px solid #ddd;
-      margin-top: 2rem;
-      user-select: none;
-      position: relative;
-      z-index: 10;
-      background: #f0f4f5;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    body.dark footer {
-      background: #121212;
-      color: #aaa;
-      border-color: #333;
     }
 
     /* Botão voltar ao topo */
@@ -338,29 +303,80 @@
     /* Foco visível */
     a:focus,
     button:focus,
-    input:focus {
+    input:focus,
+    select:focus {
       outline: 3px solid #00e6e0;
       outline-offset: 2px;
     }
 
     /* Responsividade */
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
+      .toolbar {
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      #searchInput {
+        width: 100%;
+        max-width: 300px;
+      }
+      .container {
+        gap: 0.6rem;
+      }
       .card {
         flex: 1 1 45%;
         max-width: none;
       }
-
-      #searchInput {
-        width: 95%;
+    }
+    @media (max-width: 360px) {
+      .card {
+        flex: 1 1 100%;
       }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <button id="darkModeToggle" aria-label="Alternar modo escuro" title="Alternar modo escuro" type="button" >
-      <svg id="icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+  <div class="toolbar" role="region" aria-label="Barra de ferramentas">
+    <div class="logo" aria-label="LH Ofertas">LH Ofertas</div>
+
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="Buscar promoções..."
+      aria-label="Buscar promoções"
+      autocomplete="off"
+    />
+
+    <select id="categoryFilter" aria-label="Filtrar por categoria">
+      <option value="">Todas categorias</option>
+      <!-- Opções adicionadas via JS -->
+    </select>
+
+    <select id="sortOrder" aria-label="Ordenar promoções">
+      <option value="default">Ordenar por padrão</option>
+      <option value="name-asc">Nome A → Z</option>
+      <option value="name-desc">Nome Z → A</option>
+      <!-- Pode adicionar outras ordenações, ex: preço -->
+    </select>
+
+    <button id="clearFilters" aria-label="Limpar filtros">Limpar filtros</button>
+
+    <button
+      id="darkModeToggle"
+      aria-label="Alternar modo escuro"
+      title="Alternar modo escuro"
+      type="button"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        width="20"
+        height="20"
+      >
         <circle cx="12" cy="12" r="5"></circle>
         <path d="M12 1v2"></path>
         <path d="M12 21v2"></path>
@@ -373,17 +389,15 @@
       </svg>
       <span id="darkModeText">Modo escuro</span>
     </button>
-    <img src="banner.png" alt="LCH Marketing" draggable="false" />
-    <h1>OFERTAS EM DESTAQUE</h1>
-  </header>
-
-  <div id="search-container">
-    <input type="search" id="searchInput" placeholder="Buscar ofertas..." aria-label="Buscar ofertas" />
   </div>
+
+  <header>
+    <img src="banner.png" alt="LH Marketing" draggable="false" />
+  </header>
 
   <main class="container" aria-live="polite" aria-busy="true">
     <p id="loading-msg">Carregando promoções...</p>
-    <p id="no-results">Nenhuma oferta encontrada.</p>
+    <p id="no-results" style="display:none;">Nenhuma oferta encontrada.</p>
   </main>
 
   <button id="loadMoreBtn" style="display:none;">Carregar mais</button>
@@ -402,17 +416,20 @@
     const darkModeToggle = document.getElementById('darkModeToggle');
     const darkModeText = document.getElementById('darkModeText');
     const backToTopBtn = document.getElementById('backToTop');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const sortOrder = document.getElementById('sortOrder');
+    const clearFilters = document.getElementById('clearFilters');
 
     let promocoes = [];
     let exibidos = 0;
-    const paginaTamanho = 8; // número de promoções por "página"
+    const paginaTamanho = 8;
 
-    // Função para criar o card, recebendo o objeto promo
+    // Cria um card para cada promoção
     function criarCard(promo) {
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
-        <img src="${promo.imagem}" alt="${promo.nome}" loading="lazy" draggable="false">
+        <img src="${promo.imagem}" alt="${promo.nome}" loading="lazy" draggable="false" />
         <div class="card-body">
           <h3>${promo.nome}</h3>
           <p>${promo.descricao.replace(/\n/g, "<br>")}</p>
@@ -422,142 +439,179 @@
       return card;
     }
 
+    // Popula as opções de categoria no filtro, com categorias únicas do JSON
+    function popularCategorias() {
+      const categorias = new Set();
+      promocoes.forEach(p => {
+        if (p.categoria) categorias.add(p.categoria);
+      });
+      // Limpa e adiciona opções
+      categoryFilter.innerHTML = '<option value="">Todas categorias</option>';
+      Array.from(categorias).sort().forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        categoryFilter.appendChild(opt);
+      });
+    }
+
+    // Ordena a lista conforme opção selecionada
+    function ordenarLista(lista) {
+      switch(sortOrder.value) {
+        case 'name-asc':
+          return lista.sort((a,b) => a.nome.localeCompare(b.nome));
+        case 'name-desc':
+          return lista.sort((a,b) => b.nome.localeCompare(a.nome));
+        default:
+          return lista; // sem ordenação extra
+      }
+    }
+
+    // Aplica filtros e ordenação e atualiza a exibição (recarrega do zero)
+    function atualizarExibicao() {
+      exibidos = 0;
+      container.innerHTML = '';
+      noResultsMsg.style.display = 'none';
+
+      // Filtra por busca e categoria
+      const termo = searchInput.value.trim().toLowerCase();
+      const cat = categoryFilter.value;
+
+      let filtrados = promocoes.filter(p => {
+        const nomeDesc = (p.nome + ' ' + p.descricao).toLowerCase();
+        const bateBusca = termo === '' || nomeDesc.includes(termo);
+        const bateCat = cat === '' || p.categoria === cat;
+        return bateBusca && bateCat;
+      });
+
+      // Ordena filtrados
+      filtrados = ordenarLista(filtrados);
+
+      if(filtrados.length === 0) {
+        noResultsMsg.style.display = 'block';
+        loadMoreBtn.style.display = 'none';
+        return;
+      }
+
+      carregarPagina(filtrados);
+    }
+
+    // Carrega "página" de itens filtrados (com paginação)
+    function carregarPagina(filtrados) {
+      // Se for chamada sem parâmetro, usa lista completa (sem filtro)
+      if (!filtrados) filtrados = promocoes;
+
+      const slice = filtrados.slice(exibidos, exibidos + paginaTamanho);
+      slice.forEach(promo => {
+        container.appendChild(criarCard(promo));
+      });
+
+      exibidos += slice.length;
+
+      // Mostrar ou esconder botão carregar mais
+      if(exibidos < filtrados.length) {
+        loadMoreBtn.style.display = 'block';
+      } else {
+        loadMoreBtn.style.display = 'none';
+      }
+    }
+
+    // Botão carregar mais clicado
+    loadMoreBtn.addEventListener('click', () => {
+      // Reaplica filtros para pegar a lista filtrada e carregar próxima página
+      const termo = searchInput.value.trim().toLowerCase();
+      const cat = categoryFilter.value;
+      let filtrados = promocoes.filter(p => {
+        const nomeDesc = (p.nome + ' ' + p.descricao).toLowerCase();
+        const bateBusca = termo === '' || nomeDesc.includes(termo);
+        const bateCat = cat === '' || p.categoria === cat;
+        return bateBusca && bateCat;
+      });
+      filtrados = ordenarLista(filtrados);
+
+      carregarPagina(filtrados);
+    });
+
+    // Limpar filtros
+    clearFilters.addEventListener('click', () => {
+      searchInput.value = '';
+      categoryFilter.value = '';
+      sortOrder.value = 'default';
+      atualizarExibicao();
+      searchInput.focus();
+    });
+
+    // Eventos filtros e busca
+    [searchInput, categoryFilter, sortOrder].forEach(el => {
+      el.addEventListener('input', () => {
+        atualizarExibicao();
+      });
+    });
+
+    // Modo escuro toggle
+    function atualizarModoEscuroUI(isDark) {
+      if(isDark) {
+        document.body.classList.add('dark');
+        darkModeText.textContent = 'Modo claro';
+      } else {
+        document.body.classList.remove('dark');
+        darkModeText.textContent = 'Modo escuro';
+      }
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+      const ativo = document.body.classList.toggle('dark');
+      atualizarModoEscuroUI(ativo);
+      // Salvar preferência local
+      localStorage.setItem('modoEscuro', ativo ? 'true' : 'false');
+    });
+
+    // Voltar ao topo botão
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 300) {
+        backToTopBtn.style.display = 'flex';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+      searchInput.focus();
+    });
+
+    // Carregar promoções do JSON
     async function carregarPromocoes() {
       try {
+        loadingMsg.style.display = 'block';
+        noResultsMsg.style.display = 'none';
         const resposta = await fetch('promocoes.json?v=' + Date.now());
         if (!resposta.ok) {
           loadingMsg.textContent = "Arquivo promocoes.json não encontrado (erro " + resposta.status + ")";
           return;
         }
-        const data = await resposta.json();
-        if (!Array.isArray(data)) {
+        const dados = await resposta.json();
+        if (!Array.isArray(dados)) {
           loadingMsg.textContent = "Arquivo JSON inválido: não é uma lista.";
           return;
         }
+        promocoes = dados;
 
-        promocoes = data;
-        exibidos = 0;
-        container.innerHTML = '';
+        popularCategorias();
+
+        // Verifica se há preferência de modo escuro salva
+        const modoSalvo = localStorage.getItem('modoEscuro');
+        atualizarModoEscuroUI(modoSalvo === 'true');
+
+        atualizarExibicao();
+
         loadingMsg.style.display = 'none';
-        noResultsMsg.style.display = 'none';
-
-        carregarPagina();
-
-        loadMoreBtn.style.display = (promocoes.length > paginaTamanho) ? 'block' : 'none';
       } catch (erro) {
         loadingMsg.textContent = "Erro ao carregar promoções.";
         console.error("Erro:", erro);
       }
     }
 
-    // Carregar a próxima “página” de promoções
-    function carregarPagina() {
-      const slice = promocoes.slice(exibidos, exibidos + paginaTamanho);
-      slice.forEach(promo => {
-        const card = criarCard(promo);
-        container.appendChild(card);
-      });
-      exibidos += slice.length;
-
-      if (exibidos >= promocoes.length) {
-        loadMoreBtn.style.display = 'none';
-      } else {
-        loadMoreBtn.style.display = 'block';
-      }
-
-      aplicarFiltro(); // reaplica filtro após carregar mais
-    }
-
-    // Filtrar cards pela busca
-    function aplicarFiltro() {
-      const termo = searchInput.value.toLowerCase();
-      const cards = container.querySelectorAll('.card');
-      let visiveis = 0;
-      cards.forEach(card => {
-        const nome = card.querySelector('h3').textContent.toLowerCase();
-        const descricao = card.querySelector('p').textContent.toLowerCase();
-        if (nome.includes(termo) || descricao.includes(termo)) {
-          card.style.display = '';
-          visiveis++;
-        } else {
-          card.style.display = 'none';
-        }
-      });
-      noResultsMsg.style.display = (visiveis === 0) ? 'block' : 'none';
-    }
-
-    loadMoreBtn.addEventListener('click', () => {
-      carregarPagina();
-    });
-
-    searchInput.addEventListener('input', () => {
-      aplicarFiltro();
-    });
-
-    // Modo escuro - salvar preferência localmente
-    function aplicarModoEscuro(ativo) {
-      if (ativo) {
-        document.body.classList.add('dark');
-        darkModeText.textContent = 'Modo claro';
-        // Muda ícone para sol simples
-        darkModeToggle.querySelector('svg').innerHTML = `
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        `;
-      } else {
-        document.body.classList.remove('dark');
-        darkModeText.textContent = 'Modo escuro';
-        // Ícone da lua original
-        darkModeToggle.querySelector('svg').innerHTML = `
-          <circle cx="12" cy="12" r="5"></circle>
-          <path d="M12 1v2"></path>
-          <path d="M12 21v2"></path>
-          <path d="M4.22 4.22l1.42 1.42"></path>
-          <path d="M18.36 18.36l1.42 1.42"></path>
-          <path d="M1 12h2"></path>
-          <path d="M21 12h2"></path>
-          <path d="M4.22 19.78l1.42-1.42"></path>
-          <path d="M18.36 5.64l1.42-1.42"></path>
-        `;
-      }
-    }
-
-    darkModeToggle.addEventListener('click', () => {
-      const ativo = document.body.classList.contains('dark');
-      aplicarModoEscuro(!ativo);
-      localStorage.setItem('modoEscuro', !ativo);
-    });
-
-    // Carregar preferência modo escuro do localStorage
-    window.addEventListener('load', () => {
-      const preferencia = localStorage.getItem('modoEscuro');
-      if (preferencia === 'true') {
-        aplicarModoEscuro(true);
-      }
-      carregarPromocoes();
-    });
-
-    // Botão voltar ao topo
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopBtn.style.display = 'flex';
-      } else {
-        backToTopBtn.style.display = 'none';
-      }
-    });
-
-    backToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      searchInput.focus();
-    });
+    carregarPromocoes();
   </script>
-
 </body>
 </html>
