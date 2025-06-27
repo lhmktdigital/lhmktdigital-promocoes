@@ -84,9 +84,9 @@
       border-color: #444;
     }
     .toolbar img {
+      flex-shrink: 0;
+      width: 120px;
       height: 48px;
-      width: 48px;
-      margin-right: 0.8rem;
       object-fit: contain;
       transition: filter 0.3s;
     }
@@ -106,6 +106,10 @@
       background-color: #444;
       border-color: #666;
       color: #ddd;
+    }
+    .toolbar input, .toolbar select {
+      flex-grow: 1;
+      min-width: 120px;
     }
     .toolbar button {
       background: #1cbbb4;
