@@ -34,6 +34,22 @@
       font-weight: 600;
     }
 
+    #search-container {
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    #searchInput {
+      padding: 0.5rem 0.8rem;
+      font-size: 1rem;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline-offset: 2px;
+      outline-color: #1cbbb4;
+    }
+
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -112,6 +128,22 @@
       background-position: right;
       box-shadow: 0 4px 10px rgba(28,187,180,0.5);
     }
+
+    #loading-msg {
+      text-align: center;
+      margin-top: 2rem;
+      color: #666;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #888;
+      border-top: 1px solid #ddd;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 <body>
@@ -119,23 +151,35 @@
     <img src="banner.png" alt="LCH Marketing">
     <h1>OFERTAS EM DESTAQUE</h1>
   </header>
-  <main class="container"></main>
+
+  <div id="search-container">
+    <input type="search" id="searchInput" placeholder="Buscar ofertas..." aria-label="Buscar ofertas" />
+  </div>
+
+  <main class="container">
+    <p id="loading-msg">Carregando promoções...</p>
+  </main>
+
+  <footer>
+    &copy; 2025 LH Ofertas - Todos os direitos reservados
+  </footer>
 
   <script>
     async function carregarPromocoes() {
       try {
         const resposta = await fetch('promocoes.json?v=' + Date.now());
+        const loadingMsg = document.getElementById('loading-msg');
         if (!resposta.ok) {
-          document.querySelector('.container').innerHTML = "<p>Arquivo promocoes.json não encontrado (erro " + resposta.status + ")</p>";
+          loadingMsg.textContent = "Arquivo promocoes.json não encontrado (erro " + resposta.status + ")";
           return;
         }
         const promocoes = await resposta.json();
         if (!Array.isArray(promocoes)) {
-          document.querySelector('.container').innerHTML = "<p>Arquivo JSON inválido: não é uma lista.</p>";
+          loadingMsg.textContent = "Arquivo JSON inválido: não é uma lista.";
           return;
         }
         const container = document.querySelector('.container');
-        container.innerHTML = '';
+        container.innerHTML = ''; // limpa loading msg
 
         promocoes.forEach(promo => {
           const card = document.createElement('div');
@@ -151,11 +195,28 @@
           container.appendChild(card);
         });
       } catch (erro) {
-        document.querySelector('.container').innerHTML = "<p>Erro ao carregar promoções.</p>";
+        document.getElementById('loading-msg').textContent = "Erro ao carregar promoções.";
         console.error("Erro:", erro);
       }
     }
+
     carregarPromocoes();
+
+    // Filtro de busca
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+      const termo = searchInput.value.toLowerCase();
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const nome = card.querySelector('h3').textContent.toLowerCase();
+        const descricao = card.querySelector('p').textContent.toLowerCase();
+        if (nome.includes(termo) || descricao.includes(termo)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
   </script>
 </body>
 </html>
