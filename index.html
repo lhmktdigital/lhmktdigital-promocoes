@@ -23,21 +23,39 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       text-align: center;
       transition: background-color 0.3s;
+      padding-bottom: 0.5rem;
     }
     body.dark header {
       background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100%);
     }
-    header img {
+
+    /* NOVO: container para o banner */
+    .banner-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .banner-container img {
       width: 100%;
-      max-height: 280px;
+      height: auto;
+      border-radius: 0;       /* sem borda arredondada no desktop */
+      box-shadow: none;       /* sem sombra no desktop */
       object-fit: contain;
       display: block;
       margin: 0 auto;
-      transition: filter 0.3s;
     }
-    body.dark header img {
+    /* no modo dark */
+    body.dark .banner-container img {
       filter: brightness(0.75);
     }
+    /* Mobile: bordas arredondadas e sombra suave */
+    @media (max-width: 768px) {
+      .banner-container img {
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+    }
+
     header h1 {
       font-size: 1.2rem;
       margin: 0.5rem 0 1rem;
@@ -243,7 +261,9 @@
   </div>
 
   <header>
-    <img src="banner.png" alt="LCH Marketing" />
+    <div class="banner-container">
+      <img src="banner.png" alt="LCH Marketing" />
+    </div>
     <h1>OFERTAS EM DESTAQUE</h1>
   </header>
 
