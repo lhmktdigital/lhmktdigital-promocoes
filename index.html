@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LH Ofertas</title>
-  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="icon" href="banner.png" type="image/png">
   <style>
     body {
       margin: 0;
@@ -29,6 +29,10 @@
       object-fit: contain;
       display: block;
       margin: 0 auto;
+      transition: filter 0.3s;
+    }
+    body.dark header img {
+      filter: brightness(0.75);
     }
     header h1 {
       font-size: 1.2rem;
@@ -70,6 +74,7 @@
       height: 32px;
       width: 32px;
       margin-right: 0.8rem;
+      object-fit: contain;
     }
     .toolbar input, .toolbar select, .toolbar button {
       padding: 0.5rem;
@@ -184,7 +189,7 @@
   </header>
 
   <div class="toolbar" id="toolbar">
-    <img src="logo.png" alt="Logo LH">
+    <img src="banner.png" alt="Logo LH">
     <input type="text" id="search" placeholder="Buscar...">
     <select id="categoryFilter">
       <option value="">Todas as categorias</option>
