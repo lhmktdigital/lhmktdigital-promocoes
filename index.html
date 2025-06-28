@@ -9,29 +9,27 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f4f5;
+      background-color: #f0f4f5; /* fundo claro padrão */
       color: #222;
       transition: background-color 0.3s, color 0.3s;
     }
     body.dark {
-      background-color: #1f1f1f;
+      background-color: #121212; /* fundo escuro só para o body */
       color: #ddd;
     }
+
+    /* Cabeçalho com fundo fixo branco, não muda no modo escuro */
     header {
       width: 100%;
-      background: #fff; /* fundo branco sólido */
+      background-color: #ffffff; /* fundo fixo */
       padding: 0;
       box-shadow: none;
       text-align: center;
-      transition: background-color 0.3s;
-    }
-    body.dark header {
-      background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100%);
-      box-shadow: none;
     }
 
+    /* Banner container com o mesmo fundo fixo */
     .banner-container {
-      background: transparent; /* sem fundo extra */
+      background-color: #ffffff; /* mesmo fundo que o header */
       max-width: 100%;
       padding: 0;
       margin: 0;
@@ -39,6 +37,7 @@
       justify-content: center;
     }
 
+    /* Imagem do banner */
     .banner-container img {
       width: 100%;
       max-width: 700px;
@@ -49,11 +48,8 @@
       box-shadow: none;
       display: block;
       margin: 0;
-      max-height: 140px; /* controla altura */
+      max-height: 140px;
       transition: filter 0.3s;
-    }
-    body.dark .banner-container img {
-      filter: brightness(0.75);
     }
 
     header h1 {
@@ -66,6 +62,7 @@
     body.dark header h1 {
       color: #59d9d2;
     }
+
     .topbar {
       display: flex;
       justify-content: flex-end;
@@ -86,6 +83,8 @@
     body.dark .dark-mode-toggle {
       color: #59d9d2;
     }
+
+    /* Toolbar e conteúdo abaixo que muda no modo escuro */
     .toolbar {
       display: flex;
       align-items: center;
@@ -97,7 +96,7 @@
       border-bottom: 1px solid #ddd;
       transition: background-color 0.3s, border-color 0.3s;
     }
-    .toolbar.dark {
+    body.dark .toolbar {
       background: #2a2a2a;
       border-color: #444;
     }
@@ -139,6 +138,8 @@
     .toolbar button:hover {
       background: #00e6e0;
     }
+
+    /* Container e cards que mudam no modo escuro */
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -222,6 +223,7 @@
       background-position: right;
       box-shadow: 0 4px 10px rgba(28,187,180,0.5);
     }
+
     footer {
       text-align: center;
       font-size: 0.8rem;
@@ -232,6 +234,7 @@
     body.dark footer {
       color: #bbb;
     }
+
     #backToTop {
       position: fixed;
       bottom: 20px;
