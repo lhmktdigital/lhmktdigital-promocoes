@@ -9,47 +9,32 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f4f5; /* fundo claro padrão */
+      background-color: #f0f4f5;
       color: #222;
       transition: background-color 0.3s, color 0.3s;
     }
     body.dark {
-      background-color: #121212; /* fundo escuro só para o body */
+      background-color: #121212;
       color: #ddd;
     }
 
-    /* Cabeçalho com fundo fixo branco, não muda no modo escuro */
     header {
       width: 100%;
-      background-color: #ffffff; /* fundo fixo */
+      background-color: #f1f1f1; /* cor exata do fundo do banner */
       padding: 0;
-      box-shadow: none;
       text-align: center;
+      box-shadow: none;
     }
 
-    /* Banner container com o mesmo fundo fixo */
-    .banner-container {
-      background-color: #ffffff; /* mesmo fundo que o header */
-      max-width: 100%;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Imagem do banner */
-    .banner-container img {
+    header img {
       width: 100%;
       max-width: 700px;
       height: auto;
-      object-fit: contain;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      display: block;
-      margin: 0;
       max-height: 140px;
-      transition: filter 0.3s;
+      object-fit: contain;
+      margin: 0 auto;
+      display: block;
+      filter: none !important; /* sem filtro no modo escuro */
     }
 
     header h1 {
@@ -57,8 +42,8 @@
       font-size: 1rem;
       font-weight: 600;
       color: #1cbbb4;
-      transition: color 0.3s;
     }
+
     body.dark header h1 {
       color: #59d9d2;
     }
@@ -69,6 +54,7 @@
       align-items: center;
       padding: 0.5rem 1rem;
     }
+
     .dark-mode-toggle {
       cursor: pointer;
       font-size: 0.9rem;
@@ -80,11 +66,11 @@
       gap: 0.3rem;
       transition: color 0.3s;
     }
+
     body.dark .dark-mode-toggle {
       color: #59d9d2;
     }
 
-    /* Toolbar e conteúdo abaixo que muda no modo escuro */
     .toolbar {
       display: flex;
       align-items: center;
@@ -96,10 +82,12 @@
       border-bottom: 1px solid #ddd;
       transition: background-color 0.3s, border-color 0.3s;
     }
+
     body.dark .toolbar {
       background: #2a2a2a;
       border-color: #444;
     }
+
     .toolbar img {
       flex-shrink: 0;
       width: 120px;
@@ -107,9 +95,11 @@
       object-fit: contain;
       transition: filter 0.3s;
     }
+
     body.dark .toolbar img {
       filter: brightness(1.1);
     }
+
     .toolbar input, .toolbar select, .toolbar button {
       padding: 0.5rem;
       font-size: 0.9rem;
@@ -117,6 +107,7 @@
       border-radius: 6px;
       transition: background-color 0.3s, border-color 0.3s, color 0.3s;
     }
+
     body.dark .toolbar input,
     body.dark .toolbar select,
     body.dark .toolbar button {
@@ -124,10 +115,12 @@
       border-color: #666;
       color: #ddd;
     }
+
     .toolbar input, .toolbar select {
       flex-grow: 1;
       min-width: 120px;
     }
+
     .toolbar button {
       background: #1cbbb4;
       color: white;
@@ -135,11 +128,11 @@
       border: none;
       transition: background 0.3s;
     }
+
     .toolbar button:hover {
       background: #00e6e0;
     }
 
-    /* Container e cards que mudam no modo escuro */
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -147,6 +140,7 @@
       gap: 0.8rem;
       padding: 1.2rem 1rem;
     }
+
     .card {
       background: white;
       border-radius: 12px;
@@ -158,13 +152,16 @@
       flex-direction: column;
       transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
     }
+
     body.dark .card {
       background-color: #333;
     }
+
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 6px 12px rgba(0,0,0,0.12);
     }
+
     .card img {
       width: 100%;
       height: 100px;
@@ -173,38 +170,42 @@
       border-top-right-radius: 12px;
       transition: filter 0.3s;
     }
+
     body.dark .card img {
       filter: brightness(0.85);
     }
+
     .card-body {
       padding: 0.5rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       height: 100%;
-      transition: color 0.3s;
     }
+
     .card-body h3 {
       font-size: 0.95rem;
       margin: 0 0 0.3rem;
       color: #1cbbb4;
       font-weight: 600;
-      transition: color 0.3s;
     }
+
     body.dark .card-body h3 {
       color: #59d9d2;
     }
+
     .card-body p {
       font-size: 0.78rem;
       color: #444;
       line-height: 1.3;
       white-space: pre-line;
       flex-grow: 1;
-      transition: color 0.3s;
     }
+
     body.dark .card-body p {
       color: #ccc;
     }
+
     .button {
       display: block;
       text-align: center;
@@ -219,6 +220,7 @@
       box-shadow: 0 2px 6px rgba(28,187,180,0.3);
       transition: background-position 0.3s ease, box-shadow 0.2s ease;
     }
+
     .button:hover {
       background-position: right;
       box-shadow: 0 4px 10px rgba(28,187,180,0.5);
@@ -231,6 +233,7 @@
       color: #888;
       transition: color 0.3s;
     }
+
     body.dark footer {
       color: #bbb;
     }
@@ -253,6 +256,7 @@
       z-index: 1000;
       transition: background 0.3s;
     }
+
     #backToTop:hover {
       background: #00e6e0;
     }
@@ -264,9 +268,7 @@
   </div>
 
   <header>
-    <div class="banner-container">
-      <img src="banner.png" alt="LCH Marketing" />
-    </div>
+    <img src="banner.png" alt="LH Marketing" />
     <h1>OFERTAS EM DESTAQUE</h1>
   </header>
 
