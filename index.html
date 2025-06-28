@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LH Ofertas</title>
   <link rel="icon" href="banner.png" type="image/png" />
   <style>
@@ -19,49 +19,45 @@
     }
     header {
       width: 100%;
-      background: linear-gradient(to bottom, #ffffff 0%, #e6f9f8 100%);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background: #fff; /* fundo branco sólido */
+      padding: 0;
+      box-shadow: none;
       text-align: center;
       transition: background-color 0.3s;
-      padding-top: 0.25rem;
-      padding-bottom: 0.25rem;
     }
     body.dark header {
       background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100%);
+      box-shadow: none;
     }
 
     .banner-container {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 16px;
+      background: transparent; /* sem fundo extra */
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
       display: flex;
       justify-content: center;
-      background: linear-gradient(to bottom, #ffffff 0%, #e6f9f8 100%);
-      transition: background 0.3s;
-    }
-    body.dark .banner-container {
-      background: linear-gradient(to bottom, #2a2a2a 0%, #1a1a1a 100%);
     }
 
     .banner-container img {
-      max-height: 140px;
       width: 100%;
       max-width: 700px;
       height: auto;
       object-fit: contain;
-      border-radius: 0;
+      background: transparent;
+      border: none;
       box-shadow: none;
       display: block;
-      margin: 0 auto;
-      background: transparent; /* importante: garantir fundo transparente */
+      margin: 0;
+      max-height: 140px; /* controla altura */
+      transition: filter 0.3s;
     }
     body.dark .banner-container img {
       filter: brightness(0.75);
     }
 
     header h1 {
-      margin-top: 0.25rem;
-      margin-bottom: 0.5rem;
+      margin: 0.5rem 0 1rem;
       font-size: 1rem;
       font-weight: 600;
       color: #1cbbb4;
