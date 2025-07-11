@@ -1,9 +1,8 @@
-<!-- CÓDIGO ATUALIZADO -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LH Ofertas</title>
   <link rel="icon" href="banner.png" type="image/png" />
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -273,10 +272,15 @@
     <select id="categoryFilter">
       <option value="">Todas as categorias</option>
     </select>
+    <select id="storeFilter">
+      <option value="">Todas as lojas</option>
+    </select>
     <select id="sortOrder">
       <option value="default">Ordenar</option>
       <option value="name-asc">Nome A-Z</option>
       <option value="name-desc">Nome Z-A</option>
+      <option value="date-desc">Data: mais recentes</option>
+      <option value="date-asc">Data: mais antigas</option>
     </select>
     <button id="clearFilters">Limpar</button>
   </div>
@@ -304,6 +308,7 @@
     const container = document.querySelector('.container');
     const search = document.getElementById('search');
     const categoryFilter = document.getElementById('categoryFilter');
+    const storeFilter = document.getElementById('storeFilter');
     const sortOrder = document.getElementById('sortOrder');
     const clearFilters = document.getElementById('clearFilters');
     const darkModeToggle = document.getElementById('darkModeToggle');
@@ -335,12 +340,25 @@
       });
     }
 
+    function popularLojas() {
+      const lojas = [...new Set(promocoes.map(p => p.loja).filter(Boolean))];
+      lojas.forEach(loja => {
+        const opt = document.createElement('option');
+        opt.value = loja;
+        opt.textContent = loja;
+        storeFilter.appendChild(opt);
+      });
+    }
+
     function atualizarExibicao() {
       const termo = search.value.toLowerCase();
       const categoria = categoryFilter.value;
+      const loja = storeFilter.value;
+
       let filtradas = promocoes.filter(p => {
         return (
           (!categoria || p.categoria === categoria) &&
+          (!loja || p.loja === loja) &&
           (!termo || (p.nome + p.descricao).toLowerCase().includes(termo))
         );
       });
@@ -349,8 +367,12 @@
         filtradas.sort((a, b) => a.nome.localeCompare(b.nome));
       } else if (sortOrder.value === 'name-desc') {
         filtradas.sort((a, b) => b.nome.localeCompare(a.nome));
+      } else if (sortOrder.value === 'date-asc') {
+        filtradas.sort((a, b) => new Date(a.data) - new Date(b.data));
+      } else if (sortOrder.value === 'date-desc') {
+        filtradas.sort((a, b) => new Date(b.data) - new Date(a.data));
       } else {
-        filtradas.reverse(); // Aplica ordem mais recente primeiro
+        filtradas.reverse(); // ordem padrão (mais recentes primeiro)
       }
 
       container.innerHTML = '';
@@ -360,11 +382,12 @@
     clearFilters.addEventListener('click', () => {
       search.value = '';
       categoryFilter.value = '';
+      storeFilter.value = '';
       sortOrder.value = 'default';
       atualizarExibicao();
     });
 
-    [search, categoryFilter, sortOrder].forEach(el => el.addEventListener('input', atualizarExibicao));
+    [search, categoryFilter, storeFilter, sortOrder].forEach(el => el.addEventListener('input', atualizarExibicao));
 
     darkModeToggle.addEventListener('click', () => {
       const isDark = document.body.classList.toggle('dark');
@@ -399,6 +422,7 @@
       .then(data => {
         promocoes = data;
         popularCategorias();
+        popularLojas();
         atualizarExibicao();
       })
       .catch(() => {
