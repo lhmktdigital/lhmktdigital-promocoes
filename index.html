@@ -1,3 +1,4 @@
+<!-- CÓDIGO ATUALIZADO -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LH Ofertas</title>
   <link rel="icon" href="banner.png" type="image/png" />
-  <!-- Importa Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
@@ -33,7 +33,6 @@
       margin: 0 auto;
       transition: filter 0.3s;
     }
-    /* Removido filtro no banner para modo escuro conforme sua última decisão */
     header h1 {
       font-size: 1.2rem;
       margin: 0.5rem 0 1rem;
@@ -50,7 +49,6 @@
       align-items: center;
       padding: 0.5rem 1rem;
     }
-    /* Botão do modo escuro atualizado */
     .dark-mode-toggle {
       cursor: pointer;
       width: 46px;
@@ -232,7 +230,6 @@
     body.dark .social-links a img {
       filter: invert(100%);
     }
-    /* Botão voltar ao topo melhor visível e funcional */
     #backToTop {
       position: fixed;
       bottom: 30px;
@@ -352,6 +349,8 @@
         filtradas.sort((a, b) => a.nome.localeCompare(b.nome));
       } else if (sortOrder.value === 'name-desc') {
         filtradas.sort((a, b) => b.nome.localeCompare(a.nome));
+      } else {
+        filtradas.reverse(); // Aplica ordem mais recente primeiro
       }
 
       container.innerHTML = '';
@@ -385,7 +384,6 @@
       window.scrollTo({top: 0, behavior: 'smooth'});
     });
 
-    // Inicializa ícone e tema conforme localStorage
     window.addEventListener('DOMContentLoaded', () => {
       const modoSalvo = localStorage.getItem('modoEscuro') === 'true';
       document.body.classList.toggle('dark', modoSalvo);
