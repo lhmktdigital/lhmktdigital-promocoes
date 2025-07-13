@@ -207,6 +207,26 @@
       background-position: right;
       box-shadow: 0 4px 10px rgba(28,187,180,0.5);
     }
+    .pagination {
+      text-align: center;
+      margin: 1rem auto 2rem;
+    }
+    .pagination button {
+      margin: 0 4px;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      border: 1px solid #1cbbb4;
+      background: white;
+      color: #1cbbb4;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .pagination button:hover,
+    .pagination button.active {
+      background: #1cbbb4;
+      color: white;
+    }
     footer {
       text-align: center;
       font-size: 0.8rem;
@@ -287,6 +307,8 @@
 
   <main class="container"></main>
 
+  <div class="pagination" id="pagination"></div>
+
   <button id="backToTop" title="Voltar ao topo">↑</button>
 
   <footer>
@@ -306,6 +328,7 @@
 
   <script>
     const container = document.querySelector('.container');
+    const pagination = document.getElementById('pagination');
     const search = document.getElementById('search');
     const categoryFilter = document.getElementById('categoryFilter');
     const storeFilter = document.getElementById('storeFilter');
@@ -316,6 +339,11 @@
     const toolbar = document.getElementById('toolbar');
     let promocoes = [];
 
+    // Paginação: controle da página atual e itens por página
+    let currentPage = 1;
+    const itemsPerPage = 32;
+
+    // Cria o card para uma promoção
     function criarCard(promo) {
       const card = document.createElement('div');
       card.className = 'card';
@@ -330,6 +358,7 @@
       return card;
     }
 
+    // Preenche o filtro de categorias
     function popularCategorias() {
       const categorias = [...new Set(promocoes.map(p => p.categoria).filter(Boolean))];
       categorias.forEach(cat => {
@@ -340,6 +369,7 @@
       });
     }
 
+    // Preenche o filtro de lojas
     function popularLojas() {
       const lojas = [...new Set(promocoes.map(p => p.loja).filter(Boolean))];
       lojas.forEach(loja => {
@@ -350,11 +380,13 @@
       });
     }
 
+    // Atualiza a exibição dos cards, aplicando filtros, ordenação e paginação
     function atualizarExibicao() {
       const termo = search.value.toLowerCase();
       const categoria = categoryFilter.value;
       const loja = storeFilter.value;
 
+      // Filtra as promoções
       let filtradas = promocoes.filter(p => {
         return (
           (!categoria || p.categoria === categoria) &&
@@ -363,6 +395,7 @@
         );
       });
 
+      // Ordena conforme escolha
       if (sortOrder.value === 'name-asc') {
         filtradas.sort((a, b) => a.nome.localeCompare(b.nome));
       } else if (sortOrder.value === 'name-desc') {
@@ -375,20 +408,77 @@
         filtradas.reverse(); // ordem padrão (mais recentes primeiro)
       }
 
+      // Paginação: calcula total de páginas
+      const totalPages = Math.ceil(filtradas.length / itemsPerPage);
+      if (currentPage > totalPages) currentPage = 1;
+
+      // Pega só os itens da página atual
+      const start = (currentPage - 1) * itemsPerPage;
+      const paginadas = filtradas.slice(start, start + itemsPerPage);
+
+      // Limpa e insere os cards na tela
       container.innerHTML = '';
-      filtradas.forEach(p => container.appendChild(criarCard(p)));
+      paginadas.forEach(p => container.appendChild(criarCard(p)));
+
+      // Cria os botões da paginação
+      pagination.innerHTML = '';
+      if (totalPages > 1) {
+        // Botão anterior
+        const prev = document.createElement('button');
+        prev.textContent = '←';
+        prev.disabled = currentPage === 1;
+        prev.onclick = () => {
+          currentPage--;
+          atualizarExibicao();
+          window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+        pagination.appendChild(prev);
+
+        // Botões numéricos
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement('button');
+          btn.textContent = i;
+          if (i === currentPage) btn.classList.add('active');
+          btn.onclick = () => {
+            currentPage = i;
+            atualizarExibicao();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+          };
+          pagination.appendChild(btn);
+        }
+
+        // Botão próximo
+        const next = document.createElement('button');
+        next.textContent = '→';
+        next.disabled = currentPage === totalPages;
+        next.onclick = () => {
+          currentPage++;
+          atualizarExibicao();
+          window.scrollTo({top: 0, behavior: 'smooth'});
+        };
+        pagination.appendChild(next);
+      }
     }
 
+    // Evento do botão limpar filtros
     clearFilters.addEventListener('click', () => {
       search.value = '';
       categoryFilter.value = '';
       storeFilter.value = '';
       sortOrder.value = 'default';
+      currentPage = 1;
       atualizarExibicao();
     });
 
-    [search, categoryFilter, storeFilter, sortOrder].forEach(el => el.addEventListener('input', atualizarExibicao));
+    // Atualiza quando o usuário interage com filtros/ordenação
+    [search, categoryFilter, storeFilter, sortOrder].forEach(el =>
+      el.addEventListener('input', () => {
+        currentPage = 1; // reseta pra página 1 ao filtrar
+        atualizarExibicao();
+      })
+    );
 
+    // Alterna modo escuro e salva no localStorage
     darkModeToggle.addEventListener('click', () => {
       const isDark = document.body.classList.toggle('dark');
       localStorage.setItem('modoEscuro', isDark ? 'true' : 'false');
@@ -399,14 +489,17 @@
       lucide.createIcons();
     });
 
+    // Mostrar botão voltar ao topo ao rolar
     window.addEventListener('scroll', () => {
       backToTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
     });
 
+    // Scroll suave ao topo
     backToTop.addEventListener('click', () => {
       window.scrollTo({top: 0, behavior: 'smooth'});
     });
 
+    // Ao carregar a página, aplica modo escuro salvo e inicializa ícones
     window.addEventListener('DOMContentLoaded', () => {
       const modoSalvo = localStorage.getItem('modoEscuro') === 'true';
       document.body.classList.toggle('dark', modoSalvo);
@@ -417,6 +510,7 @@
       lucide.createIcons();
     });
 
+    // Carrega as promoções do JSON e inicializa filtros e exibição
     fetch('promocoes.json?v=' + Date.now())
       .then(r => r.json())
       .then(data => {
