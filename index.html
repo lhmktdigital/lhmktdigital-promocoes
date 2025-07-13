@@ -7,40 +7,348 @@
   <link rel="icon" href="banner.png" type="image/png" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    .pagination-container {
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f5;
+      color: #222;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark {
+      background-color: #1f1f1f;
+      color: #ddd;
+    }
+    header {
+      width: 100%;
+      background-color: #f1f1f1;
       text-align: center;
-      margin: 1.5rem 0 0.5rem;
+      transition: background-color 0.3s;
+    }
+    header img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      transition: filter 0.3s;
+    }
+    header h1 {
+      font-size: 1.2rem;
+      margin: 0.5rem 0 1rem;
+      color: #1cbbb4;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    body.dark header h1 {
+      color: #59d9d2;
+    }
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0.5rem 1rem;
+    }
+    .dark-mode-toggle {
+      cursor: pointer;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: none;
+      background: #1cbbb4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 4px 10px rgba(28, 187, 180, 0.4);
+    }
+    .dark-mode-toggle:hover {
+      background: #00e6e0;
+      transform: rotate(15deg);
+    }
+    .dark-mode-toggle i {
+      width: 22px;
+      height: 22px;
+      color: white;
+      transition: transform 0.4s ease, opacity 0.3s ease;
+    }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.8rem 1rem;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #ddd;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    .toolbar.dark {
+      background: #2a2a2a;
+      border-color: #444;
+    }
+    .toolbar img {
+      flex-shrink: 0;
+      width: 120px;
+      height: 48px;
+      object-fit: contain;
+      transition: filter 0.3s;
+    }
+    body.dark .toolbar img {
+      filter: brightness(1.1);
+    }
+    .toolbar input, .toolbar select, .toolbar button {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    }
+    body.dark .toolbar input,
+    body.dark .toolbar select,
+    body.dark .toolbar button {
+      background-color: #444;
+      border-color: #666;
+      color: #ddd;
+    }
+    .toolbar input, .toolbar select {
+      flex-grow: 1;
+      min-width: 120px;
+    }
+    .toolbar button {
+      background: #1cbbb4;
+      color: white;
+      cursor: pointer;
+      border: none;
+      transition: background 0.3s;
+    }
+    .toolbar button:hover {
+      background: #00e6e0;
+    }
+    .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 6px;
+      gap: 0.8rem;
+      padding: 1.2rem 1rem;
     }
-    .pagination-container button {
-      padding: 6px 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+    .card {
       background: white;
+      border-radius: 12px;
+      flex: 1 1 140px;
+      max-width: 160px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+    }
+    body.dark .card {
+      background-color: #333;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+    }
+    .card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      transition: filter 0.3s;
+    }
+    body.dark .card img {
+      filter: brightness(0.85);
+    }
+    .card-body {
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100%;
+      transition: color 0.3s;
+    }
+    .card-body h3 {
+      font-size: 0.95rem;
+      margin: 0 0 0.3rem;
       color: #1cbbb4;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
+      font-weight: 600;
+      transition: color 0.3s;
     }
-    .pagination-container button:hover {
-      background: #1cbbb4;
-      color: white;
+    body.dark .card-body h3 {
+      color: #59d9d2;
     }
-    .pagination-container button.active {
-      background: #1cbbb4;
+    .card-body p {
+      font-size: 0.78rem;
+      color: #444;
+      line-height: 1.3;
+      white-space: pre-line;
+      flex-grow: 1;
+      transition: color 0.3s;
+    }
+    body.dark .card-body p {
+      color: #ccc;
+    }
+    .button {
+      display: block;
+      text-align: center;
+      padding: 0.4rem;
+      margin-top: auto;
+      background: linear-gradient(90deg, #1cbbb4, #00e6e0);
       color: white;
       font-weight: bold;
+      font-size: 0.75rem;
+      border-radius: 6px;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(28,187,180,0.3);
+      transition: background-position 0.3s ease, box-shadow 0.2s ease;
+    }
+    .button:hover {
+      background-position: right;
+      box-shadow: 0 4px 10px rgba(28,187,180,0.5);
+    }
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 1rem;
+      color: #888;
+      transition: color 0.3s;
+    }
+    body.dark footer {
+      color: #bbb;
+    }
+    .social-links {
+      margin-bottom: 0.8rem;
+    }
+    .social-links a img {
+      margin: 0 8px;
+      vertical-align: middle;
+      filter: invert(0%);
+      transition: filter 0.3s;
+    }
+    body.dark .social-links a img {
+      filter: invert(100%);
+    }
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #1cbbb4;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(28,187,180,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s, transform 0.3s;
+      z-index: 1000;
+    }
+    #backToTop:hover {
+      background-color: #00e6e0;
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
-  <!-- Resto do HTML permanece exatamente igual -->
+  <div class="topbar">
+    <button class="dark-mode-toggle" id="darkModeToggle" title="Alternar tema">
+      <i id="themeIcon" class="lucide" data-lucide="moon"></i>
+    </button>
+  </div>
+
+  <header>
+    <img src="banner.png" alt="LCH Marketing" />
+    <h1>OFERTAS EM DESTAQUE</h1>
+  </header>
+
+  <div class="toolbar" id="toolbar">
+    <img src="banner.png" alt="Logo LH" />
+    <input type="text" id="search" placeholder="Buscar..." />
+    <select id="categoryFilter">
+      <option value="">Todas as categorias</option>
+    </select>
+    <select id="storeFilter">
+      <option value="">Todas as lojas</option>
+    </select>
+    <select id="sortOrder">
+      <option value="default">Ordenar</option>
+      <option value="name-asc">Nome A-Z</option>
+      <option value="name-desc">Nome Z-A</option>
+      <option value="date-desc">Data: mais recentes</option>
+      <option value="date-asc">Data: mais antigas</option>
+    </select>
+    <button id="clearFilters">Limpar</button>
+  </div>
+
+  <main class="container"></main>
+
+  <button id="backToTop" title="Voltar ao topo">↑</button>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://www.instagram.com/lhmarketingepromocoes/" target="_blank" title="Instagram" aria-label="Instagram">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="24" height="24" />
+      </a>
+      <a href="https://www.tiktok.com/@lhmarketingepromocoes?_t=ZM-8xOAZgwXKNC&_r=1" target="_blank" title="TikTok" aria-label="TikTok">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok" width="24" height="24" />
+      </a>
+      <a href="https://chat.whatsapp.com/LXzvu2VRQrJH0AdoWlMCRx?mode=ac_c" target="_blank" title="WhatsApp" aria-label="WhatsApp">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" width="24" height="24" />
+      </a>
+    </div>
+    &copy; 2025 LH Ofertas - Todos os direitos reservados
+  </footer>
 
   <script>
-    // ... (todas as variáveis e funções anteriores mantidas) ...
+    const container = document.querySelector('.container');
+    const search = document.getElementById('search');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const storeFilter = document.getElementById('storeFilter');
+    const sortOrder = document.getElementById('sortOrder');
+    const clearFilters = document.getElementById('clearFilters');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const backToTop = document.getElementById('backToTop');
+    const toolbar = document.getElementById('toolbar');
+    let promocoes = [];
+
+    function criarCard(promo) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${promo.imagem}" alt="${promo.nome}">
+        <div class="card-body">
+          <h3>${promo.nome}</h3>
+          <p>${promo.descricao.replace(/\n/g, "<br>")}</p>
+          <a href="${promo.link}" class="button" target="_blank" rel="noopener noreferrer">Ver Oferta</a>
+        </div>
+      `;
+      return card;
+    }
+
+    function popularCategorias() {
+      const categorias = [...new Set(promocoes.map(p => p.categoria).filter(Boolean))];
+      categorias.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        categoryFilter.appendChild(opt);
+      });
+    }
+
+    function popularLojas() {
+      const lojas = [...new Set(promocoes.map(p => p.loja).filter(Boolean))];
+      lojas.forEach(loja => {
+        const opt = document.createElement('option');
+        opt.value = loja;
+        opt.textContent = loja;
+        storeFilter.appendChild(opt);
+      });
+    }
 
     function atualizarExibicao() {
       const termo = search.value.toLowerCase();
@@ -64,55 +372,62 @@
       } else if (sortOrder.value === 'date-desc') {
         filtradas.sort((a, b) => new Date(b.data) - new Date(a.data));
       } else {
-        filtradas.reverse();
+        filtradas.reverse(); // ordem padrão (mais recentes primeiro)
       }
-
-      const totalPages = Math.ceil(filtradas.length / itemsPerPage);
-      if (currentPage > totalPages) currentPage = 1;
-
-      const start = (currentPage - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      const paginadas = filtradas.slice(start, end);
 
       container.innerHTML = '';
-      paginadas.forEach(p => container.appendChild(criarCard(p)));
-
-      const pagination = document.getElementById('pagination');
-      pagination.innerHTML = '';
-
-      if (totalPages > 1) {
-        if (currentPage > 1) {
-          const prev = document.createElement('button');
-          prev.textContent = '← Anterior';
-          prev.onclick = () => {
-            currentPage--;
-            atualizarExibicao();
-          };
-          pagination.appendChild(prev);
-        }
-
-        for (let i = 1; i <= totalPages; i++) {
-          const btn = document.createElement('button');
-          btn.textContent = i;
-          if (i === currentPage) btn.classList.add('active');
-          btn.onclick = () => {
-            currentPage = i;
-            atualizarExibicao();
-          };
-          pagination.appendChild(btn);
-        }
-
-        if (currentPage < totalPages) {
-          const next = document.createElement('button');
-          next.textContent = 'Próximo →';
-          next.onclick = () => {
-            currentPage++;
-            atualizarExibicao();
-          };
-          pagination.appendChild(next);
-        }
-      }
+      filtradas.forEach(p => container.appendChild(criarCard(p)));
     }
+
+    clearFilters.addEventListener('click', () => {
+      search.value = '';
+      categoryFilter.value = '';
+      storeFilter.value = '';
+      sortOrder.value = 'default';
+      atualizarExibicao();
+    });
+
+    [search, categoryFilter, storeFilter, sortOrder].forEach(el => el.addEventListener('input', atualizarExibicao));
+
+    darkModeToggle.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      localStorage.setItem('modoEscuro', isDark ? 'true' : 'false');
+      toolbar.classList.toggle('dark', isDark);
+
+      const icon = document.getElementById('themeIcon');
+      icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+      lucide.createIcons();
+    });
+
+    window.addEventListener('scroll', () => {
+      backToTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const modoSalvo = localStorage.getItem('modoEscuro') === 'true';
+      document.body.classList.toggle('dark', modoSalvo);
+      toolbar.classList.toggle('dark', modoSalvo);
+
+      const icon = document.getElementById('themeIcon');
+      icon.setAttribute('data-lucide', modoSalvo ? 'sun' : 'moon');
+      lucide.createIcons();
+    });
+
+    fetch('promocoes.json?v=' + Date.now())
+      .then(r => r.json())
+      .then(data => {
+        promocoes = data;
+        popularCategorias();
+        popularLojas();
+        atualizarExibicao();
+      })
+      .catch(() => {
+        container.innerHTML = '<p>Erro ao carregar promoções.</p>';
+      });
   </script>
 </body>
 </html>
